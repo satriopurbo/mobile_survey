@@ -3,8 +3,8 @@ const User = require('../model/usermodel')
 
 function authentificationAdmin(req,res,next){
     
-    
- const decode = verifyToken(req.headers.accesstoken)
+ const decode = verifyToken(req.session.accesstoken)
+
    User.findAll({
         where:{
             password:decode.password
@@ -12,6 +12,7 @@ function authentificationAdmin(req,res,next){
     })
     .then(data=>{
         if(data.role=="Admin"){ 
+            
             next()
         }
         else{
